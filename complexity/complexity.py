@@ -40,8 +40,8 @@ def __approximate(pipe_connection, setup, statement, cleanup):
         'step': 1
     }
     model = {
-        'degree': None,
-        'coefficient:': None
+        'degree': 0.0,
+        'coefficient:': 0.0
     }
     pipe_connection.send(model)
 
