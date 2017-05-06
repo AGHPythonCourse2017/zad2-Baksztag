@@ -1,19 +1,18 @@
-from complexity import model
+from complexity import complexity
 
 
 def setup(n):
     import numpy as np
-    return np.random.rand(n, n)
+    return np.random.rand(n)
 
 
 def fun(data):
-    for i in data:
-        for j in i:
-            j += 1
+    l = data[:]
 
 
 def cleanup():
     pass
 
-result = model.get_model(setup, fun, cleanup)
-print(result)
+if __name__ == '__main__':
+    result = complexity.approximate(setup, fun, cleanup)
+    print(result)
