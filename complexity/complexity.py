@@ -90,11 +90,11 @@ def __get_complexity(degree):
         return "Exponential complexity"
 
 
-def approximate(setup, statement, cleanup, time=30):
+def approximate(setup, statement, cleanup, timeout=30):
     parent_connection, child_connection = Pipe()
     p = Process(target=__approximate, args=(child_connection,) + (setup, statement, cleanup))
     p.start()
-    p.join(time)
+    p.join(timeout)
 
     if p.is_alive():
         p.terminate()

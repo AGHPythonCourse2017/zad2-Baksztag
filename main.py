@@ -15,7 +15,7 @@ def cleanup():
 
 
 if __name__ == '__main__':
-    result = complexity.approximate(setup, fun, cleanup, time=20)
+    result = complexity.approximate(setup, fun, cleanup, timeout=20)
     print(result)
     print(result['complexity'])
     get_time = result['time_model']
