@@ -7,12 +7,13 @@ def setup(n):
 
 
 def fun(data):
-    l = data[:]
+    list(data)
 
 
 def cleanup():
     pass
 
+
 if __name__ == '__main__':
-    result = complexity.approximate(setup, fun, cleanup)
+    result = complexity.approximate(setup, fun, cleanup, time=20)
     print(result)

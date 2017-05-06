@@ -1,12 +1,15 @@
+import logging
 import timeit
+from multiprocessing import Process, Pipe
+
 import numpy as np
 from sklearn import linear_model
-from multiprocessing import Process, Pipe
 
 
 def wrapper(func, *args, **kwargs):
     def wrapped():
         return func(*args, **kwargs)
+
     return wrapped
 
 
@@ -30,6 +33,7 @@ def get_model(setup, statement, cleanup, sample_range):
 
 
 def __approximate(pipe_connection, setup, statement, cleanup):
+    logging.basicConfig(level=logging.DEBUG)
     sample_range = {
         'min': 10,
         'max': 50,
@@ -42,9 +46,17 @@ def __approximate(pipe_connection, setup, statement, cleanup):
     pipe_connection.send(model)
 
     while True:
+        logging.info('Approximating in data range {min: %d, max: %d, step: %d}.',
+                     sample_range['min'],
+                     sample_range['max'],
+                     sample_range['step']
+                     )
         model = get_model(setup, statement, cleanup, sample_range)
+        if abs(model['degree']) < 1e-1:
+            sample_range['step'] *= 2
+            sample_range['max'] *= 2
+            sample_range['min'] *= 2
         pipe_connection.send(model)
-        sample_range['max'] += 10
         if sample_range['max'] >= 2000:
             sample_range['step'] = 100
             sample_range['max'] += 100
@@ -56,6 +68,7 @@ def __approximate(pipe_connection, setup, statement, cleanup):
             sample_range['max'] += 10
         else:
             sample_range['max'] += 10
+        logging.info('Current coefficient: %f', model['degree'])
 
 
 def approximate(setup, statement, cleanup, time=30):
