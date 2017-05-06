@@ -7,7 +7,7 @@ def setup(n):
 
 
 def fun(data):
-    list(data)
+    s = sorted(data)
 
 
 def cleanup():
@@ -17,3 +17,8 @@ def cleanup():
 if __name__ == '__main__':
     result = complexity.approximate(setup, fun, cleanup, time=20)
     print(result)
+    print(result['complexity'])
+    get_time = result['time_model']
+    get_size = result['size_model']
+    print(get_time(200))
+    print(get_size(1))

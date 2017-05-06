@@ -18,7 +18,7 @@ def get_model(setup, statement, cleanup, sample_range):
     data_set = [setup(sample) for sample in samples]
     partially_applied = map(lambda data: wrapper(statement, data), data_set)
     timers = [timeit.Timer(stmt=fun) for fun in partially_applied]
-    times = list(map(lambda x: x.timeit(10), timers))
+    times = list(map(lambda x: x.timeit(10) / 10, timers))
 
     log_x = np.log(samples)
     log_y = np.log(times)
@@ -71,6 +71,25 @@ def __approximate(pipe_connection, setup, statement, cleanup):
         logging.info('Current coefficient: %f', model['degree'])
 
 
+def __get_complexity(degree):
+    if degree < 0.5:
+        return "O(1)"
+    elif 0.5 <= degree and degree < 1.05:
+        return "O(n)"
+    elif 1.05 <= degree and degree < 1.1:
+        return "O(n) or O(nlogn)"
+    elif 1.1 <= degree and degree < 1.5:
+        return "O(nlogn)"
+    elif 1.5 <= degree and degree < 2.5:
+        return "O(n^2)"
+    elif 2.5 <= degree and degree < 3.5:
+        return "O(n^3)"
+    elif 3.5 <= degree and degree < 4.5:
+        return "O(n^4)"
+    else:
+        return "Exponential complexity"
+
+
 def approximate(setup, statement, cleanup, time=30):
     parent_connection, child_connection = Pipe()
     p = Process(target=__approximate, args=(child_connection,) + (setup, statement, cleanup))
@@ -83,4 +102,17 @@ def approximate(setup, statement, cleanup, time=30):
     result = parent_connection.recv()
     while parent_connection.poll():
         result = parent_connection.recv()
-    return result
+
+    complexity = __get_complexity(result['degree'])
+
+    def get_time(n):
+        return result['coefficient'] * n ** result['degree']
+
+    def get_size(t):
+        return (t / result['coefficient']) ** (1 / result['degree'])
+
+    return {
+        'complexity': complexity,
+        'time_model': get_time,
+        'size_model': get_size
+    }
