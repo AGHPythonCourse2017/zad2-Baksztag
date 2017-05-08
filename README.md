@@ -56,11 +56,12 @@ Inne moduly wymagane do uruchomienia:
  - sklearn
  - scipy
 
-Glowna funkcjonalnosc programu oferuje funkcja approximate(setup, statement, cleanup) z pakietu complexity.
+Glowna funkcjonalnosc programu oferuje funkcja approximate(setup, statement, cleanup, timeout=30) z pakietu complexity.
 Jako paramety przyjmuje ona kolejno:
  - setup - funkcja, ktora przyjmuje jeden argument n, ktorym jest rozmiar problemu. Funkcja ta ma zwrocic odpowiednio zainicjalizowana strukture danych o rozmiarze zaleznym od n, ktora funkcja statement przyjmie jako argument
  - statement - funkcja, na podstawie ktorej oszacowany zostanie model i zlozonosc. Przyjmuje jeden argument, ktorym jest wartosc zwracana przez funkcje setup
  - cleanup - funkcja odpowiedzialna za posprzatanie
+ - timeout - ograniczenie czasowe na dopasowanie modelu w sekundach. Domyslnie 30 sekund.
 
 Funkcja approximate zwaraca slownik z kluczami:
  - "complexity" - oszacowana zlozonosc funkcji statement w postaci stringa
