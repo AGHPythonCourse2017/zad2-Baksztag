@@ -58,6 +58,10 @@ Inne moduly wymagane do uruchomienia:
 
 Glowna funkcjonalnosc programu oferuje funkcja approximate(setup, statement, cleanup) z pakietu complexity.
 Jako paramety przyjmuje ona kolejno:
- - setup - funkcja, ktora przyjmuje 1 argument n, ktorym jest rozmiar problemu. Funkcja ta ma zwrocic odpowiednio zainicjalizowana strukture danych o rozmiarze zaleznym od n, ktora funkcja statement przyjmie jako argument
- - statement - funkcja, na podstawie ktorej oszacowany zostanie model i zlozonosc. Przyjmuje 1 argument, ktorym jest wartosc zwracana przez funkcje setup
+ - setup - funkcja, ktora przyjmuje jeden argument n, ktorym jest rozmiar problemu. Funkcja ta ma zwrocic odpowiednio zainicjalizowana strukture danych o rozmiarze zaleznym od n, ktora funkcja statement przyjmie jako argument
+ - statement - funkcja, na podstawie ktorej oszacowany zostanie model i zlozonosc. Przyjmuje jeden argument, ktorym jest wartosc zwracana przez funkcje setup
  - cleanup - funkcja odpowiedzialna za posprzatanie
+Funkcja approximate zwaraca slownik z kluczami:
+ - "complexity" - oszacowana zlozonosc funkcji statement w postaci stringa
+ - "time_model" - funkcja reprezentujaca oszacowany model; przyjmuje jeden argument n, na podstawie ktorego szacuje, jaki będzie czas wykonania programu dla zadanej wielkości problemu
+ - "size_model" - funkcja reprezentujaca oszacowany model; przyjmuje jeden argument time (w sekundach), na podstawie ktorego szacuje, jaki jest maksymalny rozmiar problemu dla zadanego czasu
