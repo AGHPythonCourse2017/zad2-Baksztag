@@ -6,7 +6,7 @@ import numpy as np
 from sklearn import linear_model
 
 
-def wrapper(func, *args, **kwargs):
+def __wrapper(func, *args, **kwargs):
     def wrapped():
         return func(*args, **kwargs)
 
@@ -14,7 +14,9 @@ def wrapper(func, *args, **kwargs):
 
 
 def get_model(setup, statement, cleanup, sample_range):
-    samples = np.arange(sample_range['min'], sample_range['max'], sample_range['step'])
+    samples = np.arange(sample_range['min'],
+                        sample_range['max'],
+                        sample_range['step'])
     data_set = [setup(sample) for sample in samples]
     partially_applied = map(lambda data: wrapper(statement, data), data_set)
     timers = [timeit.Timer(stmt=fun) for fun in partially_applied]
@@ -46,7 +48,8 @@ def __approximate(pipe_connection, setup, statement, cleanup):
     pipe_connection.send(model)
 
     while True:
-        logging.info('Approximating in data range {min: %d, max: %d, step: %d}.',
+        logging.info('Approximating in data range '
+                     '{min: %d, max: %d, step: %d}.',
                      sample_range['min'],
                      sample_range['max'],
                      sample_range['step']
@@ -92,7 +95,8 @@ def __get_complexity(degree):
 
 def approximate(setup, statement, cleanup, timeout=30):
     parent_connection, child_connection = Pipe()
-    p = Process(target=__approximate, args=(child_connection,) + (setup, statement, cleanup))
+    p = Process(target=__approximate,
+                args=(child_connection,) + (setup, statement, cleanup))
     p.start()
     p.join(timeout)
 

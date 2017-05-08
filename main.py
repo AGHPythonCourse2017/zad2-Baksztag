@@ -3,11 +3,13 @@ from complexity import complexity
 
 def setup(n):
     import numpy as np
-    return np.random.rand(n)
+    return np.random.rand(n, n)
 
 
 def fun(data):
-    s = sorted(data)
+    for i in data:
+        for j in i:
+            j += 1
 
 
 def cleanup():
