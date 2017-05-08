@@ -18,9 +18,9 @@ def get_model(setup, statement, cleanup, sample_range):
                         sample_range['max'],
                         sample_range['step'])
     data_set = [setup(sample) for sample in samples]
-    partially_applied = map(lambda data: wrapper(statement, data), data_set)
+    partially_applied = map(lambda data: __wrapper(statement, data), data_set)
     timers = [timeit.Timer(stmt=fun) for fun in partially_applied]
-    times = list(map(lambda x: x.timeit(10) / 10, timers))
+    times = list(map(lambda x: x.timeit(10) / 10.0, timers))
 
     log_x = np.log(samples)
     log_y = np.log(times)
