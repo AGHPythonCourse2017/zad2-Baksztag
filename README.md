@@ -48,3 +48,16 @@ Dodatkowo trzeba wykonać trzy recenzje rozwiązań zadania nr 1 i umieścić w 
 Tresc zadania w Google Drive: https://goo.gl/r87sPE
 
 Termin oddania zadania: 8 maja 2017, 20:00
+
+
+Zalecana wersja Pythona to 3.5.2.
+Inne moduly wymagane do uruchomienia:
+ - numpy
+ - sklearn
+ - scipy
+
+Glowna funkcjonalnosc programu oferuje funkcja approximate(setup, statement, cleanup) z pakietu complexity.
+Jako paramety przyjmuje ona kolejno:
+ - setup - funkcja, ktora przyjmuje 1 argument n, ktorym jest rozmiar problemu. Funkcja ta ma zwrocic odpowiednio zainicjalizowana strukture danych o rozmiarze zaleznym od n, ktora funkcja statement przyjmie jako argument
+ - statement - funkcja, na podstawie ktorej oszacowany zostanie model i zlozonosc. Przyjmuje 1 argument, ktorym jest wartosc zwracana przez funkcje setup
+ - cleanup - funkcja odpowiedzialna za posprzatanie
