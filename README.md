@@ -61,6 +61,7 @@ Jako paramety przyjmuje ona kolejno:
  - setup - funkcja, ktora przyjmuje jeden argument n, ktorym jest rozmiar problemu. Funkcja ta ma zwrocic odpowiednio zainicjalizowana strukture danych o rozmiarze zaleznym od n, ktora funkcja statement przyjmie jako argument
  - statement - funkcja, na podstawie ktorej oszacowany zostanie model i zlozonosc. Przyjmuje jeden argument, ktorym jest wartosc zwracana przez funkcje setup
  - cleanup - funkcja odpowiedzialna za posprzatanie
+
 Funkcja approximate zwaraca slownik z kluczami:
  - "complexity" - oszacowana zlozonosc funkcji statement w postaci stringa
  - "time_model" - funkcja reprezentujaca oszacowany model; przyjmuje jeden argument n, na podstawie ktorego szacuje, jaki będzie czas wykonania programu dla zadanej wielkości problemu
